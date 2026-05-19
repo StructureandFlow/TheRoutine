@@ -29,6 +29,7 @@
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: row;
         }
 
         /* Sidebar Navigation Menu */
@@ -41,6 +42,7 @@
             left: 0;
             padding: 30px 20px;
             border-right: 1px solid var(--border-color);
+            z-index: 1000;
         }
 
         .sidebar h2 {
@@ -49,6 +51,12 @@
             margin-bottom: 30px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-top: 0;
+        }
+
+        .sidebar .nav-links {
+            display: flex;
+            flex-direction: column;
         }
 
         .sidebar a {
@@ -58,6 +66,7 @@
             margin-bottom: 15px;
             font-size: 1rem;
             transition: color 0.2s;
+            white-space: nowrap;
         }
 
         .sidebar a:hover {
@@ -86,6 +95,7 @@
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 10px;
             margin-top: 0;
+            font-size: 2rem;
         }
 
         h2 {
@@ -93,6 +103,7 @@
             margin-top: 0;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 10px;
+            font-size: 1.5rem;
         }
 
         h3 {
@@ -113,12 +124,18 @@
             color: #fff;
         }
 
+        /* Responsive Table Wrapper */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 8px;
+            background-color: #252525;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
-            background-color: #252525;
-            border-radius: 8px;
             overflow: hidden;
         }
 
@@ -178,17 +195,92 @@
             border-radius: 8px;
             border: 1px solid var(--border-color);
         }
+
+        /* ==========================================
+           MOBILE RESPONSIVE MEDIA QUERY (< 768px)
+           ========================================== */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            /* Turn Sidebar into a Top Horizontal Scroll Menu */
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: sticky;
+                top: 0;
+                padding: 15px 20px;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .sidebar h2 {
+                margin-bottom: 0;
+                font-size: 1rem;
+                border-right: 1px solid var(--border-color);
+                padding-right: 15px;
+            }
+
+            .sidebar .nav-links {
+                flex-direction: row;
+                overflow-x: auto;
+                width: 100%;
+                gap: 15px;
+                padding-bottom: 5px;
+                /* Hide scrollbar for clean look while keeping functionality */
+                -ms-overflow-style: none;  
+                scrollbar-width: none; 
+            }
+
+            .sidebar .nav-links::-webkit-scrollbar {
+                display: none; 
+            }
+
+            .sidebar a {
+                margin-bottom: 0;
+                font-size: 0.9rem;
+            }
+
+            /* Adjust Main Content Space */
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+                width: 100%;
+            }
+
+            .section-card {
+                padding: 20px;
+                margin-bottom: 25px;
+                scroll-margin-top: 80px; /* Adjusts anchor jump to clear sticky top nav */
+            }
+
+            /* Flatten Grids into 1 Column */
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.3rem; }
+        }
     </style>
 </head>
 <body>
 
 <nav class="sidebar">
     <h2>PHR Blueprint</h2>
-    <a href="#routine">1. Daily Routine</a>
-    <a href="#nutrition">2. Nutrition Protocol</a>
-    <a href="#carbs">3. Carb Master List</a>
-    <a href="#phr-plan">4. Exam Strategy</a>
-    <a href="#wiring">5. Focus Rules</a>
+    <div class="nav-links">
+        <a href="#routine">1. Daily Routine</a>
+        <a href="#nutrition">2. Nutrition Protocol</a>
+        <a href="#carbs">3. Carb Master List</a>
+        <a href="#phr-plan">4. Exam Strategy</a>
+        <a href="#wiring">5. Focus Rules</a>
+    </div>
 </nav>
 
 <main class="main-content">
@@ -301,42 +393,44 @@
     <section id="phr-plan" class="section-card">
         <h2>4. PHR 30-Day Exam Target Breakdown</h2>
         <p>Optimize your limited time by applying your systems background to high-weight functional areas first:</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Functional Area</th>
-                    <th>Exam Weight</th>
-                    <th>30-Day Emergency Priority Target</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="highlight">Employee Relations</td>
-                    <td>39%</td>
-                    <td style="color: var(--danger-color); font-weight: bold;">CRITICAL FOCUS (Employment Law, Title VII, FMLA, ADA, Labor Unions)</td>
-                </tr>
-                <tr>
-                    <td class="highlight">Talent Acquisition</td>
-                    <td>16%</td>
-                    <td style="color: var(--warning-color); font-weight: bold;">HIGH FOCUS (Job analytics, recruitment metrics, EEO compliance)</td>
-                </tr>
-                <tr>
-                    <td class="highlight">Total Rewards</td>
-                    <td>15%</td>
-                    <td style="color: var(--warning-color); font-weight: bold;">HIGH FOCUS (FLSA Exemptions, benefits architecture, compensation metrics)</td>
-                </tr>
-                <tr>
-                    <td class="highlight">HR Operations</td>
-                    <td>12%</td>
-                    <td>MODERATE (Comfort Zone—HRIS workflows, data management, privacy policies)</td>
-                </tr>
-                <tr>
-                    <td class="highlight">Learning & Development</td>
-                    <td>10%</td>
-                    <td>LOW FOCUS (Onboarding metrics, corporate training needs analysis)</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Functional Area</th>
+                        <th>Exam Weight</th>
+                        <th>30-Day Emergency Priority Target</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="highlight">Employee Relations</td>
+                        <td>39%</td>
+                        <td style="color: var(--danger-color); font-weight: bold;">CRITICAL FOCUS (Employment Law, Title VII, FMLA, ADA, Labor Unions)</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Talent Acquisition</td>
+                        <td>16%</td>
+                        <td style="color: var(--warning-color); font-weight: bold;">HIGH FOCUS (Job analytics, recruitment metrics, EEO compliance)</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Total Rewards</td>
+                        <td>15%</td>
+                        <td style="color: var(--warning-color); font-weight: bold;">HIGH FOCUS (FLSA Exemptions, benefits architecture, compensation metrics)</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">HR Operations</td>
+                        <td>12%</td>
+                        <td>MODERATE (Comfort Zone—HRIS workflows, data management, privacy policies)</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Learning & Development</td>
+                        <td>10%</td>
+                        <td>LOW FOCUS (Onboarding metrics, corporate training needs analysis)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <section id="wiring" class="section-card">
